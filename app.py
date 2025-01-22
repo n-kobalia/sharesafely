@@ -18,14 +18,13 @@ SECRET_NAME = os.getenv('SECRET_NAME')
 CONTAINER_NAME = os.getenv('CONTAINER_NAME')
 AZURE_TENANT_ID = os.getenv('AZURE_TENANT_ID')
 AZURE_CLIENT_ID = os.getenv('AZURE_CLIENT_ID')
-AZURE_CLIENT_SECRET = os.getenv('AZURE_CLIENT_SECRET')
 key_vault_url = os.getenv('KEY_VAULT_URL')
 
 # Credentials
 credential = ClientSecretCredential(
     tenant_id=AZURE_TENANT_ID,
     client_id=AZURE_CLIENT_ID,
-    client_secret=AZURE_CLIENT_SECRET
+    client_secret=os.getenv('AZURE_CLIENT_SECRET')
 )
 
 # Initialize the SecretClient to interact with the Key Vault
