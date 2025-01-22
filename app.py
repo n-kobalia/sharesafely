@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, url_for, render_template
 from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
 from azure.keyvault.secrets import SecretClient
 from azure.identity import ClientSecretCredential
+from azure.identity import DefaultAzureCredential
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
@@ -12,20 +13,14 @@ app = Flask(__name__)
 load_dotenv()
 
 # Configuration
-STORAGE_ACCOUNT_NAME = os.getenv('STORAGE_ACCOUNT_NAME')
-KEY_VAULT_NAME = os.getenv('KEY_VAULT_NAME')
-SECRET_NAME = os.getenv('SECRET_NAME')
-CONTAINER_NAME = os.getenv('CONTAINER_NAME')
-AZURE_TENANT_ID = os.getenv('AZURE_TENANT_ID')
-AZURE_CLIENT_ID = os.getenv('AZURE_CLIENT_ID')
-key_vault_url = os.getenv('KEY_VAULT_URL')
+STORAGE_ACCOUNT_NAME = 'sharesafelystorage12'
+KEY_VAULT_NAME = 'nk-key-vuaalt'
+SECRET_NAME = 'blob-storage-account-key'
+CONTAINER_NAME = 'share'
+key_vault_url = 'https://nk-key-vuaalt.vault.azure.net/'
 
-# Credentials
-credential = ClientSecretCredential(
-    tenant_id=AZURE_TENANT_ID,
-    client_id=AZURE_CLIENT_ID,
-    client_secret=os.getenv('AZURE_CLIENT_SECRET')
-)
+# Initialize the credential to use with Key Vault
+credential = DefaultAzureCredential()
 
 # Initialize the SecretClient to interact with the Key Vault
 secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
