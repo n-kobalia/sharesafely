@@ -53,7 +53,6 @@ def upload_file():
                 expiry=datetime.now(timezone.utc) + timedelta(days=1)
             )
             sas_url = f"https://{STORAGE_ACCOUNT_NAME}.blob.core.windows.net/{CONTAINER_NAME}/{file.filename}?{sas_token}"
-            print(sas_token)
             return redirect(url_for('file_link', url=sas_url))
     return render_template('upload.html')
 
